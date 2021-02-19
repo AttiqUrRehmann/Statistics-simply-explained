@@ -1,0 +1,166 @@
+---
+title: "Correlation Analysis"
+author: "ATIQ UR REHMAN"
+date: "Date: 2/18/2021"
+output:
+  beamer_presentation:
+    theme: "AnnArbor"
+    colortheme: "dolphin"
+    fonttheme: "structurebold"
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## INTRODUCTION
+
+- Correlation analysis measures the relationship between the two variables.
+
+- Correlation analysis shows us how to determine both the nature and strength of relationship between two variables.
+
+- Three possible results in the correlational study: Positive, Negative and no correlation.
+
+- Example positive correlation: Income and consumption
+
+- Example of negative correlation: Cold weather and air conditioning cost
+
+- Example of no correlation: price of clothes and car speed.
+
+## Types of Correlation
+
+- Perfect positve correlation
+
+- perfect negative correlation 
+
+- strong/weak positive correlation
+
+- strong/weak negative correlation
+
+- absolute no correlation 
+
+## ...
+
+- A correlation of +1 indicates a perfect positive  correlation.
+
+- A correlation of -1 indicates a perfect negative  correlation.
+
+- Correlation value close to 1 shows strong and close to 0 indicates weak correlation.
+
+- Also correlation value close to -1 shows strong and close to 0 indicates weak correlation.
+
+- A zero correlation indicates that there is no  relationship between the variables.
+
+## Some diagrams of correlatons
+
+```{r,fig.width=1.5, fig.height=1.5, figures-side, fig.show="hold", out.width="50%"}
+library(ggplot2)
+
+them <- theme(axis.text.x=element_blank(),
+              axis.text.y=element_blank(), 
+              axis.ticks.x = element_blank(),
+              axis.ticks.y = element_blank())
+
+a <- rnorm(100)
+b <- a
+d <- 1+rnorm(100)
+e <- 0.9*a+rnorm(100)
+f <- -0.9*a+rnorm(100)
+g <- 0.5*a+rnorm(100)
+df <- data.frame(a= a, 
+                 b= b, 
+                 c = -b,
+                 d=d,
+                 e=e,
+                 f= f,
+                 g= g)
+par(mfrow=c(2,2))#,mar = c(4, 4, .1, .1)
+
+ggplot(data=df,aes(a,b)) +
+  geom_point() +
+  theme_dark() +
+  them 
+  
+  
+ggplot(data=df,aes(a,c)) +
+  geom_point() +
+  theme_dark() +
+  them 
+
+ggplot(data=df,aes(a,d)) +
+  geom_point() +
+  theme_dark() +
+  them 
+
+ggplot(data=df,aes(a,e)) +
+  geom_point() +
+  theme_dark() +
+  them 
+
+ggplot(data=df,aes(a,f)) +
+  geom_point() +
+  theme_dark() +
+  them 
+
+ggplot(data=df,aes(a,g)) +
+  geom_point() +
+  theme_dark() +
+  them 
+```
+
+## Method of studying correlation 
+
+- Scatter Diagram
+
+- Karl Pearson' method of correlation
+
+## Scatter diagram
+
+- Scatter diagram can only tell us about the nature of correlation.
+
+- We can identify the direction of the relation visually.
+
+- We cannot determine the magnitude of correlation in scatter diagram.
+
+## Karl Pearson method of correlation
+
+- It is denoted by "r".
+
+- The formula of r is
+
+$$r= \frac{cov(x,y)}{\sqrt{Var(x)Var(y)}}, $$
+where $cov(x,y)$ is the shared variability of the two variables and $Var(x)$, $Var(y)$ are the individual variability each varibale.
+
+- The range of r is $-1 \le r \le +1$
+
+
+
+## Real dataset
+
+```{r cars, echo = TRUE}
+df_cars <- datasets::cars
+
+str(df_cars)
+
+```
+
+- The correlation between the cars' speed and distance travelled by the cars is
+```{r, echo = TRUE, warning=FALSE}
+cor(df_cars$speed, df_cars$dist)
+```
+
+## The scatter plot of cars' dataset
+
+ 
+```{r, warning=FALSE,fig.width=2.8, fig.height=2.8}
+ggplot(df_cars, aes(x=df_cars$speed, y=df_cars$dist)) + 
+  geom_point() +
+  geom_smooth(method = "lm") +
+  xlab("Speed") +
+  ylab("Distance") +
+  theme_dark() +
+  them
+```
+
